@@ -42,6 +42,9 @@ class Controller
         return $user;
     }
 
+    /**
+    * @throws Exception
+    */
     public function createDonation(string $requestBody): Donation 
     {
         $donationData = json_decode($requestBody, associative: true, flags: JSON_THROW_ON_ERROR);
