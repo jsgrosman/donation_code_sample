@@ -1,0 +1,14 @@
+{
+  "title": "User",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "number",
+      "description": "Primary Key"
+    },
+    "email": {
+      "type": "string",
+      "description": "The person's email"
+    }
+  }
+}

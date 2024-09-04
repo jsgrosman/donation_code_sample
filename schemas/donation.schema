@@ -1,0 +1,28 @@
+{
+  "title": "Donation",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Primary Key, unique identifier for the donation"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "The user id of the donator"
+    },
+    "timestamp": {
+      "type": "string",
+      "description": "The date and time of the donation, in MYSQL format [YYYY-MM-DD hh:mm:ss] UTC"
+    },
+    "amount_USD": {
+      "type": "number",
+      "description": "Amount of the donation, in US Dollars",
+      "minimum": 0
+    },
+    "org_id": {
+      "type": "string",
+      "description": "The id of the station or organization receiving the donation"
+    }
+  },
+  "required": ["id", "user_id", "timestamp", "amount_USD", "org_id"]
+}
