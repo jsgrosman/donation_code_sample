@@ -41,4 +41,32 @@ class Controller
 
         return $user;
     }
+
+    public function createDonation(string $requestBody): Donation 
+    {
+        $donationData = json_decode($requestBody, associative: true, flags: JSON_THROW_ON_ERROR);
+
+        $donation = new Donation(
+            userId: $donationData['user_id'] ?? null,
+            amountUSD: $donationData['amount_USD'] ?? 0.0,
+            orgId: $donationData['org_id'] ?? null
+        );
+        
+        if (empty($this->provider->getUser($donation->getUserId()))) {
+            throw new Exception('User Not Found');
+        }
+
+        if ($donation->getAmountUSD() <= 0) {
+            throw new Exception('Donation Amount Invalid');
+        }
+
+        if (empty($donation->getOrgId())) {
+            throw new Exception('Org Id Invalid');
+        }
+        
+        $this->provider->saveDonation($donation);
+
+        return $donation;
+    }
+
 }

@@ -28,12 +28,35 @@ $app->post('/v1/users', function (Request $request, Response $response) {
     return getUserViewResponse($user, $response);
 });
 
+$app->post('/v1/donations', function (Request $request, Response $response) {
+
+    try {
+        $controller = new Controller(new Provider());
+        $donation = $controller->createDonation((string) $request->getBody());
+
+        return getDonationViewResponse($donation, $response);
+    } catch (\Exception $e) {
+        $response->getBody()->write(
+            json_encode(['error' => $e->getMessage()])
+        );   
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(400); 
+    }
+});
+
 function getUserViewResponse(?User $user, Response $response): Response
 {
     $payload = json_encode($user, JSON_PRETTY_PRINT);
     $response->getBody()->write($payload);
 
     return $response->withHeader('Content-Type', 'application/json');
+}
+
+function getDonationViewResponse(?Donation $donation, Response $response): Response
+{
+    $payload = json_encode($donation, JSON_PRETTY_PRINT);
+    $response->getBody()->write($payload);
+
+    return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
 }
 
 $app->run();
